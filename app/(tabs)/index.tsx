@@ -11,24 +11,20 @@ const App = () => {
     const fetchData = async () => {
       try {
         // URL API untuk data
-        // const dataUrl = 'https://jsonplaceholder.typicode.com/posts';
-        // // URL API untuk gambar
-        // const imageUrl = 'https://jsonplaceholder.typicode.com/photos'; 
         const dataUrl = 'https://pokeapi.co/api/v2/pokemon/';
-        const imageUrl = 'https://ui-avatars.com/api/?background=0D8ABC&color=fff';
+        // const imageUrl = 'https://ui-avatars.com/api/?background=0D8ABC&color=fff';
 
         // Ambil data dari kedua API
         const [dataResponse, imageResponse] = await Promise.all([
           axios.get(dataUrl),
-          axios.get(imageUrl),
+          // axios.get(imageUrl),
         ]);
 
         // Gabungkan data berdasarkan id yang sama
         const combinedData = dataResponse.data.slice(0, 20).map((item) => ({
-          // id: item.id,
           name: item.name,
           url: item.url,
-          imageUrl: imageResponse,
+          // imageUrl: imageResponse,
         }));
 
         setData(combinedData);
@@ -51,7 +47,7 @@ const App = () => {
   }
 
   const renderItem = ({ item }) => (
-    <Card name={item.title} url={item.description} imageUrl={item.imageUrl} />
+    <Card name={item.title} url={item.description} />
   );
 
   return (

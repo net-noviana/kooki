@@ -5,10 +5,10 @@ import React, { useState } from 'react';
 import { RadioButton } from 'react-native-paper';
 
 
-export default function CardList({ name, url, imageUrl }) {
+export default function CardList({ name, url }) {
     return (
       <View style={styles.card}>
-      <Image source={{uri: imageUrl}} style={styles.image}/>
+      {/* <Image source={{uri: imageUrl}} style={styles.image}/> */}
       <Text style={styles.title}>{name}</Text>
       <Text style={styles.description}>{url}</Text> 
       </View>
@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   image: {
-    width: '50%',
-    height: 200,
+    width: '40%',
+    height: 60,
     borderRadius: 8,
   },
 
