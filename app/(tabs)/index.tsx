@@ -11,23 +11,21 @@ const App = () => {
     const fetchData = async () => {
       try {
         // URL API untuk data
-        const dataUrl = 'https://pokeapi.co/api/v2/pokemon/';
-        // const imageUrl = 'https://ui-avatars.com/api/?background=0D8ABC&color=fff';
+        const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=20');
+        const results = response.data.results;
 
-        // Ambil data dari kedua API
-        const [dataResponse, imageResponse] = await Promise.all([
-          axios.get(dataUrl),
-          // axios.get(imageUrl),
-        ]);
+        // Ambil detail data untuk masing-masing Pokemon
+        const pokemonDetails = await Promise.all(
+          results.map(async (pokemon) => {
+            const pokemonResponse = await axios.get(pokemon.url);
+            return {
+              name: pokemon.name,
+              imageUrl: pokemonResponse.data.sprites.front_default,
+            };
+          })
+        );
 
-        // Gabungkan data berdasarkan id yang sama
-        const combinedData = dataResponse.data.slice(0, 20).map((item) => ({
-          name: item.name,
-          url: item.url,
-          // imageUrl: imageResponse,
-        }));
-
-        setData(combinedData);
+        setData(pokemonDetails);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -47,7 +45,7 @@ const App = () => {
   }
 
   const renderItem = ({ item }) => (
-    <Card name={item.title} url={item.description} />
+    <Card name={item.name} imageUrl={item.imageUrl}/>
   );
 
   return (
@@ -55,7 +53,7 @@ const App = () => {
       <FlatList
         data={data}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item, index) => index.toString()} // Menggunakan indeks sebagai key
       />
     </View>
   );

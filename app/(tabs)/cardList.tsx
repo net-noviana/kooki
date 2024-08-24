@@ -1,21 +1,33 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import React, { useState } from 'react';
-import { RadioButton } from 'react-native-paper';
+import { StyleSheet, Text, View, Image, SafeAreaView, StatusBar } from 'react-native';
 
 
-export default function CardList({ name, url }) {
-    return (
+export default function CardList({ name, imageUrl }) {
+  return (
+
+    <View style={styles.containerParent}>
       <View style={styles.card}>
-      {/* <Image source={{uri: imageUrl}} style={styles.image}/> */}
-      <Text style={styles.title}>{name}</Text>
-      <Text style={styles.description}>{url}</Text> 
+        <View style={styles.container}>
+          <View style={styles.imgSection}>
+            <Image source={{ uri: imageUrl }} style={styles.image} />
+          </View>
+          <View style={styles.sectionContentText}>
+            <Text style={styles.title}>{name}</Text>
+            {/* <Text style={styles.description}>{url}</Text>  */}
+
+          </View>
+        
+        </View>
+      </View>
       </View>
   )
 }
 
+
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row',  // Mengatur layout untuk menempatkan konten secara horizontal
+  },
   subGrouping: {
     color: '#fafafa',
     fontFamily: 'sans-serif',
@@ -26,10 +38,10 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: '#fff',
-    padding: 16,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    borderRadius: 8,
+    padding: 3,
+    marginVertical: 2,
+    marginHorizontal: 10,
+    borderRadius: 10,
     elevation: 3, // for shadow on Android
     shadowColor: '#000', // for shadow on iOS
     shadowOffset: { width: 0, height: 2 },
@@ -46,9 +58,29 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   image: {
-    width: '40%',
-    height: 60,
+    width: '60%',
+    height: 70,
     borderRadius: 8,
+    padding: 10
+
+  },
+  sectionContentText: {
+    // backgroundColor: '#f97316',
+    // width: 100,
+    padding: 10,
+    flex: 1, // Mengambil sisa ruang yang tersedia
+  },
+  imgSection: {
+    // backgroundColor: '#facc15',
+    padding: 10,
+    width:150
+  },
+  containerParent: {
+    paddingTop: StatusBar.currentHeight,
+    // display: 'flex',
+    flex: 1,
+    // backgroundColor: '#facc15',
+    // marginTop: 40
   },
 
 });
