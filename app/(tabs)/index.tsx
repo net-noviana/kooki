@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import axios from 'axios';
-import Card from './cardList';
+import Card from '../data/cardList';
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -14,7 +14,7 @@ const App = () => {
         const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=20');
         const results = response.data.results;
 
-        // Ambil detail data untuk masing-masing Pokemon
+        // Ambil detail data untuk masing-masing respond data
         const pokemonDetails = await Promise.all(
           results.map(async (pokemon) => {
             const pokemonResponse = await axios.get(pokemon.url);
