@@ -1,8 +1,14 @@
-import { StyleSheet, Text, View, Image, SafeAreaView, StatusBar } from 'react-native';
-
+import { StyleSheet, Text, View, Image, TouchableOpacity, StatusBar, Modal } from 'react-native';
+import React, { useState } from 'react';
 
 export default function CardList({ name, imageUrl }) {
+  const [modalVisible, setModalVisible] = useState(false);
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+  const trueModal = () => { setModalVisible(true) };
   return (
+<TouchableOpacity onPress={trueModal}>
 
     <View style={styles.containerParent}>
       <View style={styles.card}>
@@ -19,6 +25,21 @@ export default function CardList({ name, imageUrl }) {
         </View>
       </View>
       </View>
+      <Modal
+      animationType='slide'
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={closeModal}
+      >
+        <View style={styles.modalOverlay}>
+        <View style={styles.modalContent}>
+        <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+            <Text style={styles.label}>Close</Text>
+          </TouchableOpacity>
+          </View>
+          </View>
+</Modal>
+</TouchableOpacity>
   )
 }
 
@@ -81,6 +102,31 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: '#facc15',
     // marginTop: 40
+  },
+  closeButton: {
+    marginTop: 20,
+    backgroundColor: '#14b8a6',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 5,    
+  },
+  label: {
+    color: '#0a0a0a',
+    fontFamily: 'sans-serif',
+    fontSize: 16,
+    marginBottom: 5
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',   
+  },
+  modalContent: {
+    width: 350,
+    padding: 30,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    alignItems: 'flex-start',
   },
 
 });
